@@ -15,7 +15,7 @@
 </head>
 <body>
 	<h1 style="text-align:center;margin:30px 0 10px 0;">Image Gallery</h1>
-	<div class="gallery" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;padding:30px;max-width:1400px;margin:0 auto;">
+	<div class="gallery">
 		<img src="Images/DSC02867.JPG" alt="DSC02867">
 		<img src="Images/DSC02882.JPG" alt="DSC02882">
 		<img src="Images/DSC02890.JPG" alt="DSC02890">
@@ -73,6 +73,68 @@
 		<img src="Images/DSC03308.JPG" alt="DSC03308">
 		<img src="Images/DSC03313.JPG" alt="DSC03313">
 		<img src="Images/DSC03334.JPG" alt="DSC03334">
+		</div>
+
+
+		<!-- Modal for expanded image with navigation arrows -->
+		<div id="modal" class="modal">
+			<span class="close">&times;</span>
+			<span class="arrow left" id="arrow-left">&#10094;</span>
+			<img class="modal-content" id="modal-img">
+			<span class="arrow right" id="arrow-right">&#10095;</span>
+			<div id="caption"></div>
+		</div>
+
+		<script>
+		// Modal logic with navigation
+		const modal = document.getElementById('modal');
+		const modalImg = document.getElementById('modal-img');
+		const captionText = document.getElementById('caption');
+		const closeBtn = document.querySelector('.close');
+		const leftArrow = document.getElementById('arrow-left');
+		const rightArrow = document.getElementById('arrow-right');
+		const images = Array.from(document.querySelectorAll('.gallery img'));
+		let currentIndex = 0;
+
+		function showModal(index) {
+			currentIndex = index;
+			modal.style.display = 'block';
+			modalImg.src = images[index].src;
+			captionText.innerHTML = images[index].alt;
+		}
+
+		images.forEach((img, idx) => {
+			img.addEventListener('click', function() {
+				showModal(idx);
+			});
+		});
+
+		leftArrow.onclick = function(e) {
+			e.stopPropagation();
+			currentIndex = (currentIndex - 1 + images.length) % images.length;
+			showModal(currentIndex);
+		}
+		rightArrow.onclick = function(e) {
+			e.stopPropagation();
+			currentIndex = (currentIndex + 1) % images.length;
+			showModal(currentIndex);
+		}
+		closeBtn.onclick = function() {
+			modal.style.display = 'none';
+		}
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = 'none';
+			}
+		}
+		document.addEventListener('keydown', function(e) {
+			if (modal.style.display === 'block') {
+				if (e.key === 'ArrowLeft') leftArrow.onclick(e);
+				if (e.key === 'ArrowRight') rightArrow.onclick(e);
+				if (e.key === 'Escape') closeBtn.onclick();
+			}
+		});
+		</script>
 	</div>
 </body>
 </html>
