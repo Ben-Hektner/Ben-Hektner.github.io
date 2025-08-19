@@ -81,14 +81,12 @@
 			<span class="arrow left" id="arrow-left">&#10094;</span>
 			<img class="modal-content" id="modal-img">
 			<span class="arrow right" id="arrow-right">&#10095;</span>
-			<div id="caption"></div>
 		</div>
 
 		<script>
 		// Modal logic with navigation
 		const modal = document.getElementById('modal');
-		const modalImg = document.getElementById('modal-img');
-		const captionText = document.getElementById('caption');
+		const modalImg = document.getElementById('modal-img');;
 		const closeBtn = document.querySelector('.close');
 		const leftArrow = document.getElementById('arrow-left');
 		const rightArrow = document.getElementById('arrow-right');
@@ -99,7 +97,6 @@
 			currentIndex = index;
 			modal.style.display = 'block';
 			modalImg.src = images[index].src;
-			captionText.innerHTML = images[index].alt;
 		}
 
 		images.forEach((img, idx) => {
